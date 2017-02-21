@@ -91,4 +91,22 @@ public class ScreenManager {
             window.setStatusBarColor(color);
         };
     }
+
+    // Custom method to get screen height in pixels using Context object
+    public static int getScreenWidthInPixels(Context context){
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(dm);
+        int width = dm.widthPixels;
+        return width;
+    }
+
+    // Custom method to get screen height in pixels using Context object
+    public static int getScreenHeightInPixels(Context context){
+        DisplayMetrics dm = new DisplayMetrics();
+        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        windowManager.getDefaultDisplay().getMetrics(dm);
+        int width = dm.heightPixels;
+        return width;
+    }
 }

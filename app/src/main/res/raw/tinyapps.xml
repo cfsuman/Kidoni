@@ -22,8 +22,29 @@
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
-        <title>Math</title>
-        <classname>MathActivity</classname>
+        <title>Math Addition</title>
+        <classname>AdditionActivity</classname>
+        <image></image>
+        <description></description>
+        <enabled>true</enabled>
+    </tinyapp>
+    <tinyapp>
+        <title>Math Subtraction</title>
+        <classname>SubtractionActivity</classname>
+        <image></image>
+        <description></description>
+        <enabled>true</enabled>
+    </tinyapp>
+    <tinyapp>
+        <title>Math Division</title>
+        <classname>DivisionActivity</classname>
+        <image></image>
+        <description></description>
+        <enabled>true</enabled>
+    </tinyapp>
+    <tinyapp>
+        <title>Math Multiplication</title>
+        <classname>MultiplicationActivity</classname>
         <image></image>
         <description></description>
         <enabled>true</enabled>
