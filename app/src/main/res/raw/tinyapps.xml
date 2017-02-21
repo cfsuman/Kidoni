@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<tinyapps>
+    <tinyapp>
+        <name>Alphabets</name>
+        <activity>AlphabetActivity</activity>
+        <image></image>
+        <description></description>
+        <enabled>true</enabled>
+    </tinyapp>
+    <tinyapp>
+        <name>Numbers</name>
+        <activity>NumbersActivity.class</activity>
+        <image></image>
+        <description></description>
+        <enabled>true</enabled>
+    </tinyapp>
+    <tinyapp>
+        <name>Maths</name>
+        <activity>MathsActivity.class</activity>
+        <image></image>
+        <description></description>
+        <enabled>true</enabled>
+    </tinyapp>
+    <tinyapp>
+        <name>Shapes</name>
+        <activity>ShapesActivity.class</activity>
+        <image></image>
+        <description></description>
+        <enabled>true</enabled>
+    </tinyapp>
+</tinyapps>
