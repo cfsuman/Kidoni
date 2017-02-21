@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/tools"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    card_view:cardCornerRadius="4dp"
+    card_view:cardElevation="4dp"
+    card_view:cardMaxElevation="6dp"
+    card_view:contentPadding="15dp"
+    android:layout_margin="5dp"
+    card_view:cardBackgroundColor="#4593e7">
+    <RelativeLayout
+        android:id="@+id/rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/iv"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            app:layout_anchor="@id/btn_do"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="10dp"
+            fresco:roundAsCircle="true"
+            />
+        <TextView
+            android:id="@+id/tv_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="#000"
+            android:fontFamily="sans-serif-condensed"
+            android:layout_below="@id/iv"
+            android:gravity="center"
+            />
+    </RelativeLayout>
+</android.support.v7.widget.CardView>
+
+<!--com.facebook.drawee.view.SimpleDraweeView
+android:id="@+id/my_image_view"
+android:layout_width="20dp"
+android:layout_height="20dp"
+fresco:fadeDuration="300"
+fresco:actualImageScaleType="focusCrop"
+fresco:placeholderImage="@color/wait_color"
+fresco:placeholderImageScaleType="fitCenter"
+fresco:failureImage="@drawable/error"
+fresco:failureImageScaleType="centerInside"
+fresco:retryImage="@drawable/retrying"
+fresco:retryImageScaleType="centerCrop"
+fresco:progressBarImage="@drawable/progress_bar"
+fresco:progressBarImageScaleType="centerInside"
+fresco:progressBarAutoRotateInterval="1000"
+fresco:backgroundImage="@color/blue"
+fresco:overlayImage="@drawable/watermark"
+fresco:pressedStateOverlayImage="@color/red"
+fresco:roundAsCircle="false"
+fresco:roundedCornerRadius="1dp"
+fresco:roundTopLeft="true"
+fresco:roundTopRight="false"
+fresco:roundBottomLeft="false"
+fresco:roundBottomRight="true"
+fresco:roundWithOverlayColor="@color/corner_color"
+fresco:roundingBorderWidth="2dp"
+fresco:roundingBorderColor="@color/border_color" /-->

@@ -5,19 +5,18 @@ package com.cfsuman.me.kidoni;
  */
 
 public class TinyApp {
-    private String name;
-    private String activity;
+    private String title;
+    private String classname;
     private String image;
     private String description;
     private boolean enabled;
 
-
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public void setActivity(String activity) {
-        this.activity = activity;
+    public void setClassname(String classname) {
+        this.classname = classname;
     }
 
     public void setImage(String image) {
@@ -32,12 +31,12 @@ public class TinyApp {
         this.enabled = enabled;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public String getActivity() {
-        return activity;
+    public String getClassname() {
+        return classname;
     }
 
     public String getImage() {
@@ -55,11 +54,12 @@ public class TinyApp {
     @Override
     public String toString() {
         return "TinyApp{" +
-                "name='" + name + '\'' +
-                ", activity='" + activity + '\'' +
+                "title='" + title + '\'' +
+                ", classname='" + classname + '\'' +
                 ", image='" + image + '\'' +
                 ", description='" + description + '\'' +
                 ", enabled=" + enabled +
                 '}';
     }
+
 }

@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <tinyapps>
     <tinyapp>
-        <name>Alphabets</name>
-        <activity>AlphabetActivity</activity>
+        <title>Alphabet</title>
+        <classname>AlphabetActivity</classname>
+        <image>abc_1000.png</image>
+        <description></description>
+        <enabled>true</enabled>
+    </tinyapp>
+    <tinyapp>
+        <title>Alphabet One By One</title>
+        <classname>AlphabetDetailsActivity</classname>
+        <image>abc_1000.png</image>
+        <description></description>
+        <enabled>true</enabled>
+    </tinyapp>
+    <tinyapp>
+        <title>Numbers</title>
+        <classname>NumbersActivity</classname>
         <image></image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
-        <name>Numbers</name>
-        <activity>NumbersActivity.class</activity>
+        <title>Math</title>
+        <classname>MathActivity</classname>
         <image></image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
-        <name>Maths</name>
-        <activity>MathsActivity.class</activity>
-        <image></image>
-        <description></description>
-        <enabled>true</enabled>
-    </tinyapp>
-    <tinyapp>
-        <name>Shapes</name>
-        <activity>ShapesActivity.class</activity>
+        <title>Shapes</title>
+        <classname>ShapesActivity</classname>
         <image></image>
         <description></description>
         <enabled>true</enabled>

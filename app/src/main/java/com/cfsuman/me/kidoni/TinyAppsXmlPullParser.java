@@ -15,8 +15,8 @@ import java.util.List;
 
 public class TinyAppsXmlPullParser {
     private static final String TINYAPP = "tinyapp";
-    private static final String TINYAPP_NAME = "name";
-    private static final String TINYAPP_ACTIVITY = "activity";
+    private static final String TINYAPP_TITLE = "title";
+    private static final String TINYAPP_CLASS_NAME = "classname";
     private static final String TINYAPP_IAMGE = "image";
     private static final String TINYAPP_DESCRIPTION = "description";
     private static final String TINYAPP_ENABLED = "enabled";
@@ -58,10 +58,10 @@ public class TinyAppsXmlPullParser {
                 }else if(eventType == XmlPullParser.TEXT){
                     if(currentTag!=null){
                         //Toast.makeText(context,currentTag + " || "+ parser.getText(),Toast.LENGTH_SHORT).show();
-                        if(currentTag.equals(TINYAPP_NAME)){
-                            currentTinyApp.setName(parser.getText());
-                        }else if(currentTag.equals(TINYAPP_ACTIVITY)){
-                            currentTinyApp.setActivity(parser.getText());
+                        if(currentTag.equals(TINYAPP_TITLE)){
+                            currentTinyApp.setTitle(parser.getText());
+                        }else if(currentTag.equals(TINYAPP_CLASS_NAME)){
+                            currentTinyApp.setClassname(parser.getText());
                         }else if(currentTag.equals(TINYAPP_IAMGE)){
                             currentTinyApp.setImage(parser.getText());
                         }else if(currentTag.equals(TINYAPP_DESCRIPTION)){

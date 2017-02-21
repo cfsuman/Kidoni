@@ -2,7 +2,6 @@ package com.cfsuman.me.kidoni;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.content.res.Resources;
@@ -24,35 +23,32 @@ import android.widget.RelativeLayout;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
+public class NumbersActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
     private Context mContext;
     private Activity mActivity;
-    private Integer mGridView_Column_Width=100; // Column width in DPs
+    private Integer mGridView_Column_Width=200; // Column width in DPs
     private HashMap<String,Integer> mColorsMap= new MapManager().getHashMap();
 
     private RelativeLayout mRelativeLayout;
     private GridView mGridView;
 
-    private TextToSpeech tts;
-    private boolean mSoundIsOn=true;
-    private String mTextToSpeak;
-
 
     private int mThemeColor = StaticDrawable.getRandomHSVColorBySaturation(0.9f);
+
+
+    private TextToSpeech tts;
+    private boolean mSoundIsOn;
+    private String mTextToSpeak;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_alphabet);
+        setContentView(R.layout.activity_numbers);
 
         // Set the context and activity
         mContext = getApplicationContext();
-        mActivity = AlphabetActivity.this;
-
+        mActivity = NumbersActivity.this;
         tts = new TextToSpeech(mContext,this);
-
-        // Set the action bar title
-        getSupportActionBar().setTitle("Alphabet");
 
         // Set a random deep color for status bar
         ScreenManager.changeStatusBarColor(
@@ -68,6 +64,9 @@ public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.
                 )
         );
 
+        // Set the action bar title
+        getSupportActionBar().setTitle("Numbers");
+
         // Get the widgets reference from XML layout
         mRelativeLayout = (RelativeLayout) findViewById(R.id.rl);
         mGridView = (GridView) findViewById(R.id.gv);
@@ -78,7 +77,7 @@ public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.
         mGridView.setBackgroundColor(Color.parseColor("#25FFFFFF"));
 
         // Set GridView adapter
-        mGridView.setAdapter(new AlphabetBaseAdapter(getApplicationContext()));
+        mGridView.setAdapter(new NumbersBaseAdapter(getApplicationContext()));
 
         // Define the GridView number of columns
         setGridViewNumberOfColumns(mGridView);
@@ -87,16 +86,12 @@ public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(mActivity, AlphabetDetailsActivity.class);
-                intent.putExtra("position", i);
+                //Intent intent = new Intent(mActivity, DetailsActivity.class);
+                //intent.putExtra("position", i);
                 //startActivity(intent);
-
-                // Speak out the text
-                if (mSoundIsOn) { // If the sound is enabled
-                    mTextToSpeak = (String)adapterView.getAdapter().getItem(i);
-                    speakNow(mTextToSpeak);
-                }
-
+                int number = i+1;
+                speakNow(number+"");
+                //Toast.makeText(mContext,""+number,Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -159,14 +154,6 @@ public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.
         }
     }
 
-    @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-        }
-    }
-
     // Custom method to speak the text
     private void speakNow(String textToSpeak) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
@@ -176,4 +163,11 @@ public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.
         }
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig){
+        super.onConfigurationChanged(newConfig);
+        if(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        }
+    }
 }

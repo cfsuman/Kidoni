@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         // Get the titny apps list from xml data
         List<TinyApp> tinyapps = pullParser.parseXMLData(mContext);
 
-        mAdapter = new MainActivityRecyclerViewAdapter(mContext,tinyapps);
+        mAdapter = new TinyAppsRecyclerViewAdapter(mContext,tinyapps);
 
         // Set an adapter for RecyclerView
         mRecyclerView.setAdapter(mAdapter);
