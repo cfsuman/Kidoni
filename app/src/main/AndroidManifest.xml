@@ -24,6 +24,11 @@
         <activity android:name=".NumbersActivity" android:parentActivityName=".MainActivity" />
         <activity android:name=".ShapesActivity" android:parentActivityName=".MainActivity" />
         <activity android:name=".AlphabetDetailsActivity" android:parentActivityName=".MainActivity"/>
+
+        <activity android:name=".AdditionActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".SubtractionActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".MultiplicationActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".DivisionActivity" android:parentActivityName=".MainActivity"/>
     </application>
 
 </manifest>

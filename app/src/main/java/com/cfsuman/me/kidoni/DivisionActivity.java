@@ -38,10 +38,10 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
     private Random mRandom = new Random();
 
     private RelativeLayout mRootLayout;
-    private TextView mTVBanner;
+    //private TextView mTVBanner;
     private TextView mTextViewQuestion;
-    private TextView mTextViewScore;
-    private ImageButton mButtonHome;
+    //private TextView mTextViewScore;
+    //private ImageButton mButtonHome;
     private Button mButtonStart;
 
     private CheckBox mCheckBox1;
@@ -80,13 +80,13 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // Set an action bar for the activity
-        requestWindowFeature(Window.FEATURE_ACTION_BAR);
+        //requestWindowFeature(Window.FEATURE_ACTION_BAR);
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_division);
 
         // Hide the action bar
-        getSupportActionBar().hide();
+        getSupportActionBar().setTitle("Division");
 
         // Get the application context
         mContext = getApplicationContext();
@@ -103,10 +103,10 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
 
         // Get the widget reference from XML layout
         mRootLayout = (RelativeLayout) findViewById(R.id.rl_root);
-        mTVBanner = (TextView) findViewById(R.id.tv_banner);
+        //mTVBanner = (TextView) findViewById(R.id.tv_banner);
         mTextViewQuestion = (TextView) findViewById(R.id.tv_question);
-        mTextViewScore = (TextView) findViewById(R.id.tv_score);
-        mButtonHome = (ImageButton) findViewById(R.id.ib_home);
+        //mTextViewScore = (TextView) findViewById(R.id.tv_score);
+        //mButtonHome = (ImageButton) findViewById(R.id.ib_home);
         mButtonStart = (Button) findViewById(R.id.btn_start);
 
         mCVNext = (CardView) findViewById(R.id.cv_next);
@@ -130,17 +130,17 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
         //-------------- Design the banner
         // Initialize a new Typeface instance
         Typeface typeface = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD);
-        mTVBanner.setTypeface(typeface);
+        //mTVBanner.setTypeface(typeface);
         //mTVBanner.setTextColor(StaticDrawable.getRandomDarkerHSVColor());
-        mTVBanner.setTextColor(Color.parseColor("#ECF2FF"));
+        //mTVBanner.setTextColor(Color.parseColor("#ECF2FF"));
 
         // Define the blur effect radius
-        float radius = mTVBanner.getTextSize()/10;
+        //float radius = mTVBanner.getTextSize()/10;
 
         // Initialize a new BlurMaskFilter instance
-        BlurMaskFilter filter = new BlurMaskFilter(radius, BlurMaskFilter.Blur.SOLID);
+        //BlurMaskFilter filter = new BlurMaskFilter(radius, BlurMaskFilter.Blur.SOLID);
         // Set the TextView layer type
-        mTVBanner.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        //mTVBanner.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
 
         // Finally, apply the blur effect on TextView text
         //mTVBanner.getPaint().setMaskFilter(filter);
