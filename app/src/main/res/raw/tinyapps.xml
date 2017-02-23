@@ -36,15 +36,15 @@
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
-        <title>Math Division</title>
-        <classname>DivisionActivity</classname>
+        <title>Math Multiplication</title>
+        <classname>MultiplicationActivity</classname>
         <image></image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
-        <title>Math Multiplication</title>
-        <classname>MultiplicationActivity</classname>
+        <title>Math Division</title>
+        <classname>DivisionActivity</classname>
         <image></image>
         <description></description>
         <enabled>true</enabled>

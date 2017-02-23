@@ -12,7 +12,7 @@
     card_view:cardMaxElevation="6dp"
     card_view:contentPadding="15dp"
     android:layout_margin="5dp"
-    card_view:cardBackgroundColor="#4593e7">
+    card_view:cardBackgroundColor="#feffff">
     <RelativeLayout
         android:id="@+id/rl"
         android:layout_width="wrap_content"

@@ -107,11 +107,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="NEXT"
-                    android:textColor="#fff"
-                    android:layout_margin="0dp"
                     android:visibility="gone"
                     android:layout_gravity="center"
                     android:gravity="center"
+                    android:padding="10dp"
                     />
             </LinearLayout>
         </GridLayout>
