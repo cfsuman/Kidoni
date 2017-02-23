@@ -5,10 +5,135 @@ import java.util.Random;
 public class QuestionManager {
     private Random mRandom=new Random();
 
-    public static int[] generateAdditionQuestion(int max, int min){
-        Random mRandom = new Random();
-        int num1 = mRandom.nextInt(max);
-        int num2 = mRandom.nextInt(min);
+    public static Question generateAdditionQuestion(int max, int min){
+        Question question = new Question();
+        Random random = new Random();
+
+        int num1 = random.nextInt(max);
+        int num2 = random.nextInt(min);
+
+        // Put the biggest value in num1
+        int num3 = num1;
+        if(num1 < num2){
+            num1 = num2;
+            num2 = num3;
+        }
+        question.setNum1(num1);
+        question.setNum2(num2);
+
+        int rightAnswer = num1+num2;
+        question.setResult(rightAnswer);
+
+        // Random range minimum inclusive and maximum exclusive
+        int random1 = random.nextInt(5 - 1) + 1;
+        int random2 = random.nextInt(10 - 5) + 5;
+        int random3 = random.nextInt(5 - 1) + 1;
+
+        int wrongAnswer1 = rightAnswer + random1;
+        int wrongAnswer2 = rightAnswer + random2;
+        int wrongAnswer3 = rightAnswer - random3;
+
+        // Initialize a new array of possible answers
+        int[] answerArray = new int[]{wrongAnswer1,wrongAnswer2,wrongAnswer3,rightAnswer};
+        answerArray = ShuffleArray(answerArray);
+
+        question.setA(answerArray[0]);
+        question.setB(answerArray[1]);
+        question.setC(answerArray[2]);
+        question.setD(answerArray[3]);
+
+        // Return the question
+        return question;
+    }
+
+    public static Question generateSubtractionQuestion(int max, int min) {
+        Question question = new Question();
+        Random random = new Random();
+
+        int num1 = random.nextInt(max);
+        int num2 = random.nextInt(min);
+
+        // Put the biggest value in num1
+        int num3 = num1;
+        if(num1 < num2){
+            num1 = num2;
+            num2 = num3;
+        }
+        question.setNum1(num1);
+        question.setNum2(num2);
+
+
+        int rightAnswer = num1-num2;
+        question.setResult(rightAnswer);
+
+        // Random range minimum inclusive and maximum exclusive
+        int random1 = random.nextInt(5 - 1) + 1;
+        int random2 = random.nextInt(10 - 5) + 5;
+        int random3 = random.nextInt(5 - 1) + 1;
+
+        int wrongAnswer1 = rightAnswer + random1;
+        int wrongAnswer2 = rightAnswer + random2;
+        int wrongAnswer3 = rightAnswer - random3;
+
+        // Initialize a new array of possible answers
+        int[] answerArray = new int[]{wrongAnswer1,wrongAnswer2,wrongAnswer3,rightAnswer};
+        answerArray = ShuffleArray(answerArray);
+
+        question.setA(answerArray[0]);
+        question.setB(answerArray[1]);
+        question.setC(answerArray[2]);
+        question.setD(answerArray[3]);
+
+        // Return the question
+        return question;
+    }
+    public static Question generateMultiplicationQuestion(int max, int min) {
+        Question question = new Question();
+        Random random = new Random();
+
+        int num1 = random.nextInt(max);
+        int num2 = random.nextInt(min);
+
+        // Put the biggest value in num1
+        int num3 = num1;
+        if(num1 < num2){
+            num1 = num2;
+            num2 = num3;
+        }
+        question.setNum1(num1);
+        question.setNum2(num2);
+
+
+        int rightAnswer = num1*num2;
+        question.setResult(rightAnswer);
+
+        // Random range minimum inclusive and maximum exclusive
+        int random1 = random.nextInt(5 - 1) + 1;
+        int random2 = random.nextInt(10 - 5) + 5;
+        int random3 = random.nextInt(5 - 1) + 1;
+
+        int wrongAnswer1 = rightAnswer + random1;
+        int wrongAnswer2 = rightAnswer + random2;
+        int wrongAnswer3 = rightAnswer - random3;
+
+        // Initialize a new array of possible answers
+        int[] answerArray = new int[]{wrongAnswer1,wrongAnswer2,wrongAnswer3,rightAnswer};
+        answerArray = ShuffleArray(answerArray);
+
+        question.setA(answerArray[0]);
+        question.setB(answerArray[1]);
+        question.setC(answerArray[2]);
+        question.setD(answerArray[3]);
+
+        // Return the question
+        return question;
+    }
+    public static Question generateDivisionQuestion(int max, int min) {
+        Question question = new Question();
+        Random random = new Random();
+
+        int num1 = random.nextInt(max - 1) + 1;
+        int num2 = random.nextInt(min - 1) + 1;
 
         // Put the biggest value in num1
         int num3 = num1;
@@ -17,35 +142,38 @@ public class QuestionManager {
             num2 = num3;
         }
 
-        int rightAnswer = num1+num2;
+
+        int multiply = num1*num2;
+        int rightAnswer = multiply/num2;
+
+        question.setNum1(multiply);
+        question.setNum2(num2);
+        question.setResult(rightAnswer);
 
         // Random range minimum inclusive and maximum exclusive
-        int random1 = mRandom.nextInt(5 - 1) + 1;
-        int random2 = mRandom.nextInt(10 - 5) + 5;
-        int random3 = mRandom.nextInt(5 - 1) + 1;
+        int random1 = random.nextInt(5 - 1) + 1;
+        int random2 = random.nextInt(10 - 5) + 5;
+        int random3 = random.nextInt(5 - 1) + 1;
 
         int wrongAnswer1 = rightAnswer + random1;
         int wrongAnswer2 = rightAnswer + random2;
         int wrongAnswer3 = rightAnswer - random3;
 
-        // Initialize a new Array of possible answers
+        // Initialize a new array of possible answers
         int[] answerArray = new int[]{wrongAnswer1,wrongAnswer2,wrongAnswer3,rightAnswer};
         answerArray = ShuffleArray(answerArray);
-        int[] result = new int[7];
-        result[0]=answerArray[0];
-        result[1]=answerArray[1];
-        result[2]=answerArray[2];
-        result[3]=answerArray[3];
-        result[4]=num1;
-        result[5]=num2;
-        result[6]=rightAnswer;
 
-        // Shuffle the answers
-        return result;
+        question.setA(answerArray[0]);
+        question.setB(answerArray[1]);
+        question.setC(answerArray[2]);
+        question.setD(answerArray[3]);
 
+        // Return the question
+        return question;
     }
 
-    public static int[] ShuffleArray(int[] array)
+
+        public static int[] ShuffleArray(int[] array)
     {
         int index, temp;
         Random random = new Random();

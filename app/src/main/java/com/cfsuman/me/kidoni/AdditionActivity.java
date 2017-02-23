@@ -2,77 +2,58 @@ package com.cfsuman.me.kidoni;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
-import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
+import android.transition.TransitionManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
-import java.util.Random;
+
 
 public class AdditionActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
     private Context mContext;
     private Activity mActivity;
 
-    private Random mRandom = new Random();
-
     private RelativeLayout mRootLayout;
     private TextView mTextViewQuestion;
     private Button mButtonStart;
+    private GridLayout mGridLayout;
+    private LinearLayout mLLFirstRow;
+    private LinearLayout mLLSecondRow;
 
     private TextView mTVAnser1;
     private TextView mTVAnser2;
     private TextView mTVAnser3;
     private TextView mTVAnser4;
+    private View[] mTVAnswerArray;
 
-    private int[] mAnswersArray;
-    private int mTotalQuestions;
     private int mRightAnswer;
-    private int mRightAnswerPosition;
-
-    //private int mRightAnswerColor = Color.parseColor("#FF1B9367");
-    private int mRightAnswerColor = Color.BLACK;
-    private int mWrongAnswerColor = Color.BLACK;
-
-    private int mPresentScore;
 
     private GradientDrawableManager mGradientDrawableManager;
     private GradientManager mGradientManager;
     private Point mSize = new Point();
 
-
-    private CardView mCVNext;
-
-
     private TextToSpeech tts;
-    private boolean mSoundIsOn;
     private String mTextToSpeak;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Set an action bar for the activity
-        //requestWindowFeature(Window.FEATURE_ACTION_BAR);
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addition);
 
@@ -96,42 +77,39 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         mRootLayout = (RelativeLayout) findViewById(R.id.rl_root);
         mTextViewQuestion = (TextView) findViewById(R.id.tv_question);
         mButtonStart = (Button) findViewById(R.id.btn_start);
-
-        mCVNext = (CardView) findViewById(R.id.cv_next);
-
-        mCVNext.setCardBackgroundColor(StaticDrawable.getRandomDarkerHSVColor());
+        mGridLayout = (GridLayout) findViewById(R.id.gl);
+        mLLFirstRow = (LinearLayout) findViewById(R.id.ll_first_row);
+        mLLSecondRow = (LinearLayout) findViewById(R.id.ll_second_row);
 
         mTVAnser1 = (TextView) findViewById(R.id.tv_answer_1);
         mTVAnser2 = (TextView) findViewById(R.id.tv_answer_2);
         mTVAnser3 = (TextView) findViewById(R.id.tv_answer_3);
         mTVAnser4 = (TextView) findViewById(R.id.tv_answer_4);
 
+        mTVAnswerArray= new View[]{mTVAnser1,mTVAnser2,mTVAnser3,mTVAnser4};
+
         mTVAnser1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedAnswer = Integer.valueOf(mTVAnser1.getText().toString());
-                afterAnswerClicked(selectedAnswer);
+                afterAnswerClicked(mTVAnser1);
             }
         });
         mTVAnser2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedAnswer = Integer.valueOf(mTVAnser2.getText().toString());
-                afterAnswerClicked(selectedAnswer);
+                afterAnswerClicked(mTVAnser2);
             }
         });
         mTVAnser3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedAnswer = Integer.valueOf(mTVAnser3.getText().toString());
-                afterAnswerClicked(selectedAnswer);
+                afterAnswerClicked(mTVAnser3);
             }
         });
         mTVAnser4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int selectedAnswer = Integer.valueOf(mTVAnser4.getText().toString());
-                afterAnswerClicked(selectedAnswer);
+                afterAnswerClicked(mTVAnser4);
             }
         });
 
@@ -144,34 +122,32 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         mButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int[] questionArray = QuestionManager.generateAdditionQuestion(20,10);
+                Question question = QuestionManager.generateAdditionQuestion(20,10);
+                GenerateTransition.backgroundInitialColorTransition(mTVAnswerArray);
+                ChangeViewProperty.enabledViews(mTVAnswerArray);
 
                 mTextViewQuestion.setTextColor(Color.BLACK);
-                mCVNext.setVisibility(View.INVISIBLE);
+                mButtonStart.setVisibility(View.INVISIBLE);
 
-                int rightAnswer = questionArray[6];
+                int rightAnswer = question.getResult();
                 mRightAnswer = rightAnswer;
 
                 //mTextViewQuestion.setText("Add the two numbers\n");
                 mTextViewQuestion.setText("");
                 mTextViewQuestion.setText(mTextViewQuestion.getText() + "" +
-                                questionArray[4] + "\n+  "
-                                + questionArray[5] // + " \n---------------"
+                                question.getNum1() + "\n+  "
+                                + question.getNum2() // + " \n---------------"
                 );
 
-                mTVAnser1.setText(""+questionArray[0]);
-                mTVAnser2.setText(""+questionArray[1]);
-                mTVAnser3.setText(""+questionArray[2]);
-                mTVAnser4.setText(""+questionArray[3]);
+                mTVAnser1.setText(""+question.getA());
+                mTVAnser2.setText(""+question.getB());
+                mTVAnser3.setText(""+question.getC());
+                mTVAnser4.setText(""+question.getD());
 
-                mTextToSpeak = questionArray[4]+"+"+questionArray[5];
+                mTextToSpeak = question.getNum1()+"+"+question.getNum2();
                 speakNow(mTextToSpeak);
 
-                //mRightAnswerPosition = GetRightAnswerPosition();
                 mButtonStart.setEnabled(false);
-
-                // Set the root layout background
-                //mRootLayout.setBackground(mGradientDrawableManager.getSweepGradientDrawable());
             }
         });
 
@@ -181,15 +157,36 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         //mCVNext.setVisibility(View.VISIBLE);
 
     }
+    protected void afterAnswerClicked(TextView v){
+        int selectedAnswer = Integer.valueOf(v.getText().toString());
 
-    protected void afterAnswerClicked(int selectedAnswer){
+        int a = Integer.valueOf(mTVAnser1.getText().toString());
+        int b = Integer.valueOf(mTVAnser2.getText().toString());
+        int c = Integer.valueOf(mTVAnser3.getText().toString());
+        int d = Integer.valueOf(mTVAnser4.getText().toString());
+
         if(selectedAnswer == mRightAnswer){
-            Toast.makeText(mContext,"Right",Toast.LENGTH_SHORT).show();
+            speakNow("Yes");
+            GenerateTransition.backgroundPositiveColorTransition(v);
         }else {
-            Toast.makeText(mContext,"Wrong",Toast.LENGTH_SHORT).show();
+            GenerateTransition.backgroundNegativeColorTransition(v);
+            if(a==mRightAnswer){
+                GenerateTransition.backgroundPositiveColorTransition(mTVAnser1);
+            }else if(b==mRightAnswer){
+                GenerateTransition.backgroundPositiveColorTransition(mTVAnser2);
+            }else if(c==mRightAnswer){
+                GenerateTransition.backgroundPositiveColorTransition(mTVAnser3);
+            }else if(d==mRightAnswer){
+                GenerateTransition.backgroundPositiveColorTransition(mTVAnser4);
+            }
+            speakNow("No");
         }
+
         mButtonStart.setEnabled(true);
-        mCVNext.setVisibility(View.VISIBLE);
+        mButtonStart.setVisibility(View.VISIBLE);
+        ChangeViewProperty.disabledViews(mTVAnswerArray);
+        TransitionManager.beginDelayedTransition(mRootLayout);
+        //hideViews(mTVAnser1,mTVAnser2,mTVAnser3,mTVAnser4,mLLFirstRow,mLLSecondRow);
     }
 
     protected void performBGAnimation(View v, int bgColor){
