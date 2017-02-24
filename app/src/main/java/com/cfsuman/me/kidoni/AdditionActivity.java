@@ -12,8 +12,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.ChangeBounds;
 import android.transition.TransitionManager;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -30,10 +32,12 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
     private Activity mActivity;
 
     private RelativeLayout mRootLayout;
+    private RelativeLayout mRLQuestion;
     private TextView mTVQuestion;
     private Button mButtonStart;
     private GridLayout mGridLayout;
     private LinearLayout mLLFirstRow;
+    private LinearLayout mLLQuestion;
     private LinearLayout mLLSecondRow;
 
     private TextView mTVAnswer1;
@@ -50,6 +54,8 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
 
     private TextToSpeech tts;
     private String mTextToSpeak;
+
+    private int mThemeColor = StaticDrawable.getRandomHSVColorBySaturation(0.9f);
 
 
     @Override
@@ -69,17 +75,33 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         mSize.x = ScreenManager.getScreenWidthInPixels(mContext);
         mSize.y = ScreenManager.getScreenHeightInPixels(mContext);
 
+        // Set a random deep color for status bar
+        ScreenManager.changeStatusBarColor(
+                mActivity, StaticDrawable.getDeepColorBySaturation(
+                        mThemeColor, 0.8f
+                )
+        );
+
+        // Set the action bar background color
+        getSupportActionBar().setBackgroundDrawable(
+                new ColorDrawable(
+                        StaticDrawable.getDeepColorBySaturation(mThemeColor, 0.9f)
+                )
+        );
+
         // Initialize a new instance of GradientManager class
         mGradientManager = new GradientManager(mContext,mSize);
         mGradientDrawableManager = new GradientDrawableManager(mContext,mSize);
 
         // Get the widget reference from XML layout
         mRootLayout = (RelativeLayout) findViewById(R.id.rl_root);
+        mRLQuestion = (RelativeLayout) findViewById(R.id.rl_tv_question);
         mTVQuestion = (TextView) findViewById(R.id.tv_question);
         mButtonStart = (Button) findViewById(R.id.btn_start);
         mGridLayout = (GridLayout) findViewById(R.id.gl);
         mLLFirstRow = (LinearLayout) findViewById(R.id.ll_first_row);
         mLLSecondRow = (LinearLayout) findViewById(R.id.ll_second_row);
+        mLLQuestion = (LinearLayout) findViewById(R.id.ll_question);
 
         mTVAnswer1 = (TextView) findViewById(R.id.tv_answer_1);
         mTVAnswer2 = (TextView) findViewById(R.id.tv_answer_2);
@@ -114,10 +136,6 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         });
 
 
-        // Chan4e the status bar colo3
-        //Scree4Manager.changeStatusB4rColor(mActivity, StaticDrawable.getRandomDarkerHSVColor());
-        ScreenManager.changeStatusBarColor(mActivity, Color.parseColor("#FF008DB9"));
-
         // Set a click listener for start button
         mButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -127,17 +145,28 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
                 ChangeViewProperty.enabledViews(mTVAnswerArray);
 
                 mTVQuestion.setTextColor(Color.BLACK);
+
+                TransitionManager.beginDelayedTransition(mRootLayout,GenerateTransition.makeFadeTransition());
                 mButtonStart.setVisibility(View.INVISIBLE);
 
                 int rightAnswer = question.getResult();
                 mRightAnswer = rightAnswer;
 
-                //mTextViewQuestion.setText("Add the two numbers\n");
+                ChangeBounds changeBounds = new ChangeBounds();
+                changeBounds.setDuration(2000);
+
                 mTVQuestion.setText("");
+
                 mTVQuestion.setText(mTVQuestion.getText() + "" +
                                 question.getNum1() + "\n+  "
                                 + question.getNum2() // + " \n---------------"
                 );
+
+                TransitionManager.beginDelayedTransition(mRootLayout,changeBounds);
+                mTVQuestion.setTextSize(TypedValue.COMPLEX_UNIT_SP,5);
+
+                TransitionManager.beginDelayedTransition(mRootLayout,changeBounds);
+                mTVQuestion.setTextSize(TypedValue.COMPLEX_UNIT_SP,75);
 
                 mTVAnswer1.setText(""+question.getA());
                 mTVAnswer2.setText(""+question.getB());
@@ -154,7 +183,6 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         // Start the exam
         mButtonStart.performClick();
         mButtonStart.setEnabled(false);
-        //mCVNext.setVisibility(View.VISIBLE);
 
     }
     protected void afterAnswerClicked(TextView v){
@@ -183,7 +211,10 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         }
 
         mButtonStart.setEnabled(true);
+
+        TransitionManager.beginDelayedTransition(mRootLayout,GenerateTransition.makeFadeTransition());
         mButtonStart.setVisibility(View.VISIBLE);
+
         ChangeViewProperty.disabledViews(mTVAnswerArray);
         TransitionManager.beginDelayedTransition(mRootLayout);
         //hideViews(mTVAnser1,mTVAnser2,mTVAnser3,mTVAnser4,mLLFirstRow,mLLSecondRow);

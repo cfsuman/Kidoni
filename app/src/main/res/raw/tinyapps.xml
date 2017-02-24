@@ -3,56 +3,56 @@
     <tinyapp>
         <title>Alphabet</title>
         <classname>AlphabetActivity</classname>
-        <image>abc_1000.png</image>
+        <image>sign_alphabet.png</image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
         <title>Alphabet One By One</title>
         <classname>AlphabetDetailsActivity</classname>
-        <image>abc_1000.png</image>
+        <image>sign_alphabet_one_by_one.png</image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
         <title>Numbers</title>
         <classname>NumbersActivity</classname>
-        <image></image>
+        <image>sign_numbers.png</image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
         <title>Math Addition</title>
         <classname>AdditionActivity</classname>
-        <image></image>
+        <image>sign_addition.png</image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
         <title>Math Subtraction</title>
         <classname>SubtractionActivity</classname>
-        <image></image>
+        <image>sign_subtraction.png</image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
         <title>Math Multiplication</title>
         <classname>MultiplicationActivity</classname>
-        <image></image>
+        <image>sign_multiplication.png</image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
         <title>Math Division</title>
         <classname>DivisionActivity</classname>
-        <image></image>
+        <image>sign_division.png</image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>
     <tinyapp>
         <title>Shapes</title>
         <classname>ShapesActivity</classname>
-        <image></image>
+        <image>sign_shapes.png</image>
         <description></description>
         <enabled>true</enabled>
     </tinyapp>

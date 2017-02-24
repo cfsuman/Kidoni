@@ -32,9 +32,7 @@ public class NumbersActivity extends AppCompatActivity implements TextToSpeech.O
     private RelativeLayout mRelativeLayout;
     private GridView mGridView;
 
-
     private int mThemeColor = StaticDrawable.getRandomHSVColorBySaturation(0.9f);
-
 
     private TextToSpeech tts;
     private boolean mSoundIsOn;

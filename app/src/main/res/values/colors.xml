@@ -1,6 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#793fc6</color>
+    <color name="colorPrimaryDark">#61339e</color>
     <color name="colorAccent">#FF4081</color>
+    
+    <!-- app interface colors -->
+
+    <!-- tiny apps custom view -->
+    <color name="tinyapps_card_bg_color">#DED8E6</color>
+
+    <!-- tiny apps custom view -->
+    <color name="main_activity_bg_color">#baa4d7</color>
+    
+    <!-- math question activity -->
+    <color name="math_root_layout_bg">#c64971</color>
+    <color name="math_question_bg">#f24987</color>
+    <color name="math_answer_grid_bg">#30559e</color>
+    <color name="math_divider_color">#a63e5f</color>
+    <color name="math_button_start">#2a7ee4</color>
 </resources>

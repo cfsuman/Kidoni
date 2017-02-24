@@ -52,6 +52,8 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
     private TextToSpeech tts;
     private String mTextToSpeak;
 
+    private int mThemeColor = StaticDrawable.getRandomHSVColorBySaturation(0.9f);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +71,20 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
         // Set the point x y values
         mSize.x = ScreenManager.getScreenWidthInPixels(mContext);
         mSize.y = ScreenManager.getScreenHeightInPixels(mContext);
+
+        // Set a random deep color for status bar
+        ScreenManager.changeStatusBarColor(
+                mActivity, StaticDrawable.getDeepColorBySaturation(
+                        mThemeColor, 0.8f
+                )
+        );
+
+        // Set the action bar background color
+        getSupportActionBar().setBackgroundDrawable(
+                new ColorDrawable(
+                        StaticDrawable.getDeepColorBySaturation(mThemeColor, 0.9f)
+                )
+        );
 
         // Initialize a new instance of GradientManager class
         mGradientManager = new GradientManager(mContext,mSize);
@@ -114,10 +130,6 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
             }
         });
 
-
-        // Chan4e the status bar colo3
-        //Scree4Manager.changeStatusB4rColor(mActivity, StaticDrawable.getRandomDarkerHSVColor());
-        ScreenManager.changeStatusBarColor(mActivity, Color.parseColor("#FF008DB9"));
 
         // Set a click listener for start button
         mButtonStart.setOnClickListener(new View.OnClickListener() {
