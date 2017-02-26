@@ -13,7 +13,7 @@
     <color name="main_activity_bg_color">#baa4d7</color>
     
     <!-- math question activity -->
-    <color name="math_root_layout_bg">#c64971</color>
+    <color name="math_root_layout_bg">#989c93</color>
     <color name="math_question_bg">#f24987</color>
     <color name="math_answer_grid_bg">#30559e</color>
     <color name="math_divider_color">#a63e5f</color>

@@ -1,5 +1,9 @@
 package com.cfsuman.me.kidoni;
 
+import android.animation.AnimatorSet;
+import android.animation.FloatEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -13,10 +17,22 @@ import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.ChangeBounds;
+import android.transition.ChangeClipBounds;
+import android.transition.ChangeScroll;
+import android.transition.ChangeTransform;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Scene;
+import android.transition.Slide;
 import android.transition.TransitionManager;
+import android.transition.TransitionSet;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.BounceInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -32,7 +48,6 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
     private Activity mActivity;
 
     private RelativeLayout mRootLayout;
-    private RelativeLayout mRLQuestion;
     private TextView mTVQuestion;
     private Button mButtonStart;
     private GridLayout mGridLayout;
@@ -95,7 +110,6 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
 
         // Get the widget reference from XML layout
         mRootLayout = (RelativeLayout) findViewById(R.id.rl_root);
-        mRLQuestion = (RelativeLayout) findViewById(R.id.rl_tv_question);
         mTVQuestion = (TextView) findViewById(R.id.tv_question);
         mButtonStart = (Button) findViewById(R.id.btn_start);
         mGridLayout = (GridLayout) findViewById(R.id.gl);
@@ -142,18 +156,19 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
             public void onClick(View view) {
                 Question question = QuestionManager.generateAdditionQuestion(20,10);
                 GenerateTransition.backgroundInitialColorTransition(mTVAnswerArray);
-                ChangeViewProperty.enabledViews(mTVAnswerArray);
 
+                ChangeViewProperty.enabledViews(mTVAnswerArray);
                 mTVQuestion.setTextColor(Color.BLACK);
 
-                TransitionManager.beginDelayedTransition(mRootLayout,GenerateTransition.makeFadeTransition());
+                mTVQuestion.setVisibility(View.GONE);
+                AnimationManager.startReverseScaleAnimation(mLLQuestion);
+
+                goToScene(new Scene(mRootLayout));
                 mButtonStart.setVisibility(View.INVISIBLE);
+                mTVQuestion.setVisibility(View.VISIBLE);
 
                 int rightAnswer = question.getResult();
                 mRightAnswer = rightAnswer;
-
-                ChangeBounds changeBounds = new ChangeBounds();
-                changeBounds.setDuration(2000);
 
                 mTVQuestion.setText("");
 
@@ -161,12 +176,6 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
                                 question.getNum1() + "\n+  "
                                 + question.getNum2() // + " \n---------------"
                 );
-
-                TransitionManager.beginDelayedTransition(mRootLayout,changeBounds);
-                mTVQuestion.setTextSize(TypedValue.COMPLEX_UNIT_SP,5);
-
-                TransitionManager.beginDelayedTransition(mRootLayout,changeBounds);
-                mTVQuestion.setTextSize(TypedValue.COMPLEX_UNIT_SP,75);
 
                 mTVAnswer1.setText(""+question.getA());
                 mTVAnswer2.setText(""+question.getB());
@@ -185,6 +194,30 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         mButtonStart.setEnabled(false);
 
     }
+
+    protected void goToScene(Scene scene){
+        ChangeBounds changeBounds = new ChangeBounds();
+        ChangeClipBounds changeClipBounds = new ChangeClipBounds();
+        ChangeTransform changeTransform = new ChangeTransform();
+        ChangeScroll changeScroll = new ChangeScroll();
+        Fade fade = new Fade();
+        Explode explode = new Explode();
+        Slide slide = new Slide();
+
+        TransitionSet set = new TransitionSet();
+        set.setOrdering(TransitionSet.ORDERING_TOGETHER);
+        set.addTransition(changeBounds);
+        //set.addTransition(changeClipBounds);
+        set.addTransition(changeTransform);
+        set.addTransition(fade);
+        set.addTransition(explode);
+        set.addTransition(slide);
+
+        TransitionManager.go(scene);
+
+    }
+
+
     protected void afterAnswerClicked(TextView v){
         int selectedAnswer = Integer.valueOf(v.getText().toString());
 
@@ -211,21 +244,13 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         }
 
         mButtonStart.setEnabled(true);
+        ChangeViewProperty.disabledViews(mTVAnswerArray);
 
-        TransitionManager.beginDelayedTransition(mRootLayout,GenerateTransition.makeFadeTransition());
+        goToScene(new Scene(mRootLayout));
         mButtonStart.setVisibility(View.VISIBLE);
 
-        ChangeViewProperty.disabledViews(mTVAnswerArray);
-        TransitionManager.beginDelayedTransition(mRootLayout);
-        //hideViews(mTVAnser1,mTVAnser2,mTVAnser3,mTVAnser4,mLLFirstRow,mLLSecondRow);
     }
 
-    protected void performBGAnimation(View v, int bgColor){
-        ColorDrawable[] color = {new ColorDrawable(Color.parseColor("#c5e8ff")), new ColorDrawable(bgColor)};
-        TransitionDrawable trans = new TransitionDrawable(color);
-        v.setBackground(trans);
-        trans.startTransition(3000); // duration 3 seconds
-    }
 
     @Override
     public void onResume(){
