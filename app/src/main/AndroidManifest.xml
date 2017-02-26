@@ -12,7 +12,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,10 +28,22 @@
         <activity android:name=".ShapesActivity" android:parentActivityName=".MainActivity" />
         <activity android:name=".AlphabetDetailsActivity" android:parentActivityName=".MainActivity"/>
 
-        <activity android:name=".AdditionActivity" android:parentActivityName=".MainActivity"/>
-        <activity android:name=".SubtractionActivity" android:parentActivityName=".MainActivity"/>
-        <activity android:name=".MultiplicationActivity" android:parentActivityName=".MainActivity"/>
-        <activity android:name=".DivisionActivity" android:parentActivityName=".MainActivity"/>
+        <activity android:name=".AdditionActivity" android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".SubtractionActivity" android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".MultiplicationActivity" android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".DivisionActivity" android:parentActivityName=".MainActivity"
+            android:configChanges="orientation|screenSize"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>
