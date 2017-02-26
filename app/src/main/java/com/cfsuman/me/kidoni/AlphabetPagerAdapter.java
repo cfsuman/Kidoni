@@ -88,9 +88,7 @@ public class AlphabetPagerAdapter extends PagerAdapter {
         tv.setTextColor(Color.BLACK);
 
         // Initialize a new Typeface instance
-        //Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/SEASRN__.ttf");
-        Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/FFF_Tusj.ttf");
-        tv.setTypeface(font);
+        //tv.setTypeface(font);
 
         // Set the TextView layer type
         tv.setLayerType(View.LAYER_TYPE_SOFTWARE,null);
