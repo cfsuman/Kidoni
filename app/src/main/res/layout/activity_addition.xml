@@ -28,80 +28,81 @@
             android:gravity="end"
             android:textStyle="bold"
             android:layout_gravity="center"
+            android:textColor="@color/math_question_text_color"
             />
     </LinearLayout>
 
-        <GridLayout
-            android:id="@+id/gl"
+    <GridLayout
+        android:id="@+id/gl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:rowCount="3"
+        android:columnCount="1"
+        android:layout_below="@id/ll_question"
+        android:background="@color/math_answer_grid_bg"
+        android:padding="0dp"
+        android:layout_margin="0dp"
+        >
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:rowCount="3"
-            android:columnCount="1"
-            android:layout_below="@id/ll_question"
-            android:background="@color/math_answer_grid_bg"
-            android:padding="0dp"
-            android:layout_margin="0dp"
+            android:orientation="vertical"
+            android:weightSum="2"
             >
             <LinearLayout
+                android:id="@+id/ll_first_row"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
+                android:orientation="horizontal"
+                android:layout_weight="1"
                 android:weightSum="2"
                 >
-                <LinearLayout
-                    android:id="@+id/ll_first_row"
+                <TextView
+                    android:id="@+id/tv_answer_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:weightSum="2"
-                    >
-                    <TextView
-                        android:id="@+id/tv_answer_1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        style="@style/AnswerTextView"
-                        />
-                    <TextView
-                        android:id="@+id/tv_answer_2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        style="@style/AnswerTextView"
-                        />
-                </LinearLayout>
-                <LinearLayout
-                    android:id="@+id/ll_second_row"
+                    style="@style/AnswerTextView"
+                    />
+                <TextView
+                    android:id="@+id/tv_answer_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_weight="1"
-                    android:weightSum="2"
-                    >
-                    <TextView
-                        android:id="@+id/tv_answer_3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        style="@style/AnswerTextView"
-                        />
-                    <TextView
-                        android:id="@+id/tv_answer_4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        style="@style/AnswerTextView"
-                        />
-                </LinearLayout>
-                <Button
-                    android:id="@+id/btn_start"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="NEXT"
-                    android:visibility="visible"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:padding="20dp"
-                    android:layout_margin="10dp"
-                    android:background="@drawable/states_custom_button"
+                    style="@style/AnswerTextView"
                     />
             </LinearLayout>
-        </GridLayout>
+            <LinearLayout
+                android:id="@+id/ll_second_row"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1"
+                android:weightSum="2"
+                >
+                <TextView
+                    android:id="@+id/tv_answer_3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/AnswerTextView"
+                    />
+                <TextView
+                    android:id="@+id/tv_answer_4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    style="@style/AnswerTextView"
+                    />
+            </LinearLayout>
+            <Button
+                android:id="@+id/btn_start"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="NEXT"
+                android:visibility="invisible"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:padding="20dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/states_custom_button"
+                />
+        </LinearLayout>
+    </GridLayout>
 </RelativeLayout>

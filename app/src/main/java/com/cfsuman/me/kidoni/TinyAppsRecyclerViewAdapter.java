@@ -57,7 +57,7 @@ public class TinyAppsRecyclerViewAdapter extends RecyclerView.Adapter<TinyAppsRe
                 final String title = tv_title.getText().toString();
 
                 // Display the RecyclerView clicked item serial and label
-                Toast.makeText(mContext,"Clicked : " + title,Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext,"Clicked : " + title,Toast.LENGTH_SHORT).show();
 
                 try {
                     Intent intent = new Intent(mContext, Class.forName(mContext.getPackageName() +"."+ tv_title.getTag()));

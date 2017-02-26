@@ -44,7 +44,7 @@ public class NumbersBaseAdapter extends BaseAdapter {
             holder.tv = (TextView) convertView.findViewById(R.id.tv);
             holder.pos = position;
 
-            Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/SEASRN__.ttf");
+            //Typeface font = Typeface.createFromAsset(mContext.getAssets(), "fonts/SEASRN__.ttf");
             //holder.tv.setTypeface(font);
 
             // Set a gradient background for current element

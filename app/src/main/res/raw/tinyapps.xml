@@ -54,6 +54,6 @@
         <classname>ShapesActivity</classname>
         <image>sign_shapes.png</image>
         <description></description>
-        <enabled>true</enabled>
+        <enabled>false</enabled>
     </tinyapp>
 </tinyapps>

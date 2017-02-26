@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Initialize a new TinyAppsXmlPullParser instance
         TinyAppsXmlPullParser pullParser = new TinyAppsXmlPullParser();
-        // Get the titny apps list from xml data
+        // Get the tiny apps list from xml data
         List<TinyApp> tinyapps = pullParser.parseXMLData(mContext);
 
         mAdapter = new TinyAppsRecyclerViewAdapter(mContext,tinyapps);

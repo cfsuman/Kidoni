@@ -14,8 +14,13 @@
     
     <!-- math question activity -->
     <color name="math_root_layout_bg">#989c93</color>
-    <color name="math_question_bg">#f24987</color>
-    <color name="math_answer_grid_bg">#30559e</color>
-    <color name="math_divider_color">#a63e5f</color>
-    <color name="math_button_start">#2a7ee4</color>
+    <color name="math_question_bg">#909986</color>
+    <color name="math_answer_grid_bg">#663399</color>
+    <color name="math_question_text_color">#000</color>
+
+    <color name="math_answer_text_view_initial_background_color">#000</color>
+    <color name="math_answer_text_view_positive_background_color">#000</color>
+    <color name="math_answer_text_view_negative_background_color">#000</color>
+
+
 </resources>

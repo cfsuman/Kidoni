@@ -35,7 +35,7 @@ public class AlphabetDetailsActivity extends AppCompatActivity implements TextTo
     private PagerAdapter mPagerAdapter;
     private ViewPager mViewPager;
     private RelativeLayout mRelativeLayout;
-    private ToggleButton mToggleButtonSound;
+    //private ToggleButton mToggleButtonSound;
 
     private SharedPreferences mSharedPreferences;
     private SharedPreferences.Editor mEditor;
@@ -98,7 +98,7 @@ public class AlphabetDetailsActivity extends AppCompatActivity implements TextTo
         // get the widgets reference from Xml Layout
         mRelativeLayout = (RelativeLayout) findViewById(R.id.rl);
         mViewPager = (ViewPager) findViewById(R.id.vp);
-        mToggleButtonSound = (ToggleButton) findViewById(R.id.tb_sound);
+        //mToggleButtonSound = (ToggleButton) findViewById(R.id.tb_sound);
 
         // Set the RelativeLayout background
         mRelativeLayout.setBackground(StaticDrawable.getLayoutDrawable());

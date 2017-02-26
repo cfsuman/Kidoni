@@ -1,9 +1,5 @@
 package com.cfsuman.me.kidoni;
 
-import android.animation.AnimatorSet;
-import android.animation.FloatEvaluator;
-import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
@@ -11,7 +7,6 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -27,18 +22,12 @@ import android.transition.Slide;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
-import android.view.animation.BounceInterpolator;
-import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
 
@@ -79,6 +68,7 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         setContentView(R.layout.activity_addition);
 
         // Set the action bar title
+        //--------------------------------------------------------------------------------------------------------------------------------- change 1
         getSupportActionBar().setTitle("Addition");
 
         // Get the application context
@@ -154,25 +144,22 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         mButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //-------------------------------------------------------------------------------------------- change 2
                 Question question = QuestionManager.generateAdditionQuestion(20,10);
                 GenerateTransition.backgroundInitialColorTransition(mTVAnswerArray);
 
                 ChangeViewProperty.enabledViews(mTVAnswerArray);
-                mTVQuestion.setTextColor(Color.BLACK);
 
-                mTVQuestion.setVisibility(View.GONE);
                 AnimationManager.startReverseScaleAnimation(mLLQuestion);
 
-                goToScene(new Scene(mRootLayout));
+                GenerateTransition.goToScene(new Scene(mRootLayout));
                 mButtonStart.setVisibility(View.INVISIBLE);
-                mTVQuestion.setVisibility(View.VISIBLE);
 
                 int rightAnswer = question.getResult();
                 mRightAnswer = rightAnswer;
 
-                mTVQuestion.setText("");
-
-                mTVQuestion.setText(mTVQuestion.getText() + "" +
+                //-------------------------------------------------------------------------------------------- change 3
+                mTVQuestion.setText("" +
                                 question.getNum1() + "\n+  "
                                 + question.getNum2() // + " \n---------------"
                 );
@@ -182,39 +169,14 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
                 mTVAnswer3.setText(""+question.getC());
                 mTVAnswer4.setText(""+question.getD());
 
-                mTextToSpeak = question.getNum1()+"+"+question.getNum2();
+                //-------------------------------------------------------------------------------------------- change 4
+                mTextToSpeak = question.getNum1()+" plus "+question.getNum2();
                 speakNow(mTextToSpeak);
-
-                mButtonStart.setEnabled(false);
             }
         });
 
         // Start the exam
         mButtonStart.performClick();
-        mButtonStart.setEnabled(false);
-
-    }
-
-    protected void goToScene(Scene scene){
-        ChangeBounds changeBounds = new ChangeBounds();
-        ChangeClipBounds changeClipBounds = new ChangeClipBounds();
-        ChangeTransform changeTransform = new ChangeTransform();
-        ChangeScroll changeScroll = new ChangeScroll();
-        Fade fade = new Fade();
-        Explode explode = new Explode();
-        Slide slide = new Slide();
-
-        TransitionSet set = new TransitionSet();
-        set.setOrdering(TransitionSet.ORDERING_TOGETHER);
-        set.addTransition(changeBounds);
-        //set.addTransition(changeClipBounds);
-        set.addTransition(changeTransform);
-        set.addTransition(fade);
-        set.addTransition(explode);
-        set.addTransition(slide);
-
-        TransitionManager.go(scene);
-
     }
 
 
@@ -243,12 +205,10 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
             speakNow("No");
         }
 
-        mButtonStart.setEnabled(true);
         ChangeViewProperty.disabledViews(mTVAnswerArray);
 
-        goToScene(new Scene(mRootLayout));
+        GenerateTransition.goToScene(new Scene(mRootLayout));
         mButtonStart.setVisibility(View.VISIBLE);
-
     }
 
 

@@ -7,12 +7,20 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.TransitionDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.ChangeBounds;
+import android.transition.ChangeClipBounds;
+import android.transition.ChangeScroll;
+import android.transition.ChangeTransform;
+import android.transition.Explode;
+import android.transition.Fade;
+import android.transition.Scene;
+import android.transition.Slide;
 import android.transition.TransitionManager;
+import android.transition.TransitionSet;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,10 +28,8 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.Locale;
-import java.util.Random;
 
 
 public class SubtractionActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
@@ -31,16 +37,17 @@ public class SubtractionActivity extends AppCompatActivity implements TextToSpee
     private Activity mActivity;
 
     private RelativeLayout mRootLayout;
-    private TextView mTextViewQuestion;
+    private TextView mTVQuestion;
     private Button mButtonStart;
     private GridLayout mGridLayout;
     private LinearLayout mLLFirstRow;
+    private LinearLayout mLLQuestion;
     private LinearLayout mLLSecondRow;
 
-    private TextView mTVAnser1;
-    private TextView mTVAnser2;
-    private TextView mTVAnser3;
-    private TextView mTVAnser4;
+    private TextView mTVAnswer1;
+    private TextView mTVAnswer2;
+    private TextView mTVAnswer3;
+    private TextView mTVAnswer4;
     private View[] mTVAnswerArray;
 
     private int mRightAnswer;
@@ -54,12 +61,14 @@ public class SubtractionActivity extends AppCompatActivity implements TextToSpee
 
     private int mThemeColor = StaticDrawable.getRandomHSVColorBySaturation(0.9f);
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addition);
 
         // Set the action bar title
+        //--------------------------------------------------------------------------------------------------------------------------------- change 1
         getSupportActionBar().setTitle("Subtraction");
 
         // Get the application context
@@ -91,41 +100,42 @@ public class SubtractionActivity extends AppCompatActivity implements TextToSpee
 
         // Get the widget reference from XML layout
         mRootLayout = (RelativeLayout) findViewById(R.id.rl_root);
-        mTextViewQuestion = (TextView) findViewById(R.id.tv_question);
+        mTVQuestion = (TextView) findViewById(R.id.tv_question);
         mButtonStart = (Button) findViewById(R.id.btn_start);
         mGridLayout = (GridLayout) findViewById(R.id.gl);
         mLLFirstRow = (LinearLayout) findViewById(R.id.ll_first_row);
         mLLSecondRow = (LinearLayout) findViewById(R.id.ll_second_row);
+        mLLQuestion = (LinearLayout) findViewById(R.id.ll_question);
 
-        mTVAnser1 = (TextView) findViewById(R.id.tv_answer_1);
-        mTVAnser2 = (TextView) findViewById(R.id.tv_answer_2);
-        mTVAnser3 = (TextView) findViewById(R.id.tv_answer_3);
-        mTVAnser4 = (TextView) findViewById(R.id.tv_answer_4);
+        mTVAnswer1 = (TextView) findViewById(R.id.tv_answer_1);
+        mTVAnswer2 = (TextView) findViewById(R.id.tv_answer_2);
+        mTVAnswer3 = (TextView) findViewById(R.id.tv_answer_3);
+        mTVAnswer4 = (TextView) findViewById(R.id.tv_answer_4);
 
-        mTVAnswerArray= new View[]{mTVAnser1,mTVAnser2,mTVAnser3,mTVAnser4};
+        mTVAnswerArray= new View[]{mTVAnswer1,mTVAnswer2,mTVAnswer3,mTVAnswer4};
 
-        mTVAnser1.setOnClickListener(new View.OnClickListener() {
+        mTVAnswer1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                afterAnswerClicked(mTVAnser1);
+                afterAnswerClicked(mTVAnswer1);
             }
         });
-        mTVAnser2.setOnClickListener(new View.OnClickListener() {
+        mTVAnswer2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                afterAnswerClicked(mTVAnser2);
+                afterAnswerClicked(mTVAnswer2);
             }
         });
-        mTVAnser3.setOnClickListener(new View.OnClickListener() {
+        mTVAnswer3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                afterAnswerClicked(mTVAnser3);
+                afterAnswerClicked(mTVAnswer3);
             }
         });
-        mTVAnser4.setOnClickListener(new View.OnClickListener() {
+        mTVAnswer4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                afterAnswerClicked(mTVAnser4);
+                afterAnswerClicked(mTVAnswer4);
             }
         });
 
@@ -134,48 +144,49 @@ public class SubtractionActivity extends AppCompatActivity implements TextToSpee
         mButtonStart.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //-------------------------------------------------------------------------------------------- change 2
                 Question question = QuestionManager.generateSubtractionQuestion(50,10);
                 GenerateTransition.backgroundInitialColorTransition(mTVAnswerArray);
+
                 ChangeViewProperty.enabledViews(mTVAnswerArray);
 
-                mTextViewQuestion.setTextColor(Color.BLACK);
+                AnimationManager.startReverseScaleAnimation(mLLQuestion);
+
+                GenerateTransition.goToScene(new Scene(mRootLayout));
                 mButtonStart.setVisibility(View.INVISIBLE);
 
                 int rightAnswer = question.getResult();
                 mRightAnswer = rightAnswer;
 
-                //mTextViewQuestion.setText("Add the two numbers\n");
-                mTextViewQuestion.setText("");
-                mTextViewQuestion.setText(mTextViewQuestion.getText() + "" +
+                //-------------------------------------------------------------------------------------------- change 3
+                mTVQuestion.setText("" +
                         question.getNum1() + "\n-  "
                         + question.getNum2() // + " \n---------------"
                 );
 
-                mTVAnser1.setText(""+question.getA());
-                mTVAnser2.setText(""+question.getB());
-                mTVAnser3.setText(""+question.getC());
-                mTVAnser4.setText(""+question.getD());
+                mTVAnswer1.setText(""+question.getA());
+                mTVAnswer2.setText(""+question.getB());
+                mTVAnswer3.setText(""+question.getC());
+                mTVAnswer4.setText(""+question.getD());
 
+                //-------------------------------------------------------------------------------------------- change 4
                 mTextToSpeak = question.getNum1()+" minus "+question.getNum2();
                 speakNow(mTextToSpeak);
-
-                mButtonStart.setEnabled(false);
             }
         });
 
         // Start the exam
         mButtonStart.performClick();
-        mButtonStart.setEnabled(false);
-        //mCVNext.setVisibility(View.VISIBLE);
-
     }
+
+
     protected void afterAnswerClicked(TextView v){
         int selectedAnswer = Integer.valueOf(v.getText().toString());
 
-        int a = Integer.valueOf(mTVAnser1.getText().toString());
-        int b = Integer.valueOf(mTVAnser2.getText().toString());
-        int c = Integer.valueOf(mTVAnser3.getText().toString());
-        int d = Integer.valueOf(mTVAnser4.getText().toString());
+        int a = Integer.valueOf(mTVAnswer1.getText().toString());
+        int b = Integer.valueOf(mTVAnswer2.getText().toString());
+        int c = Integer.valueOf(mTVAnswer3.getText().toString());
+        int d = Integer.valueOf(mTVAnswer4.getText().toString());
 
         if(selectedAnswer == mRightAnswer){
             speakNow("Yes");
@@ -183,30 +194,23 @@ public class SubtractionActivity extends AppCompatActivity implements TextToSpee
         }else {
             GenerateTransition.backgroundNegativeColorTransition(v);
             if(a==mRightAnswer){
-                GenerateTransition.backgroundPositiveColorTransition(mTVAnser1);
+                GenerateTransition.backgroundPositiveColorTransition(mTVAnswer1);
             }else if(b==mRightAnswer){
-                GenerateTransition.backgroundPositiveColorTransition(mTVAnser2);
+                GenerateTransition.backgroundPositiveColorTransition(mTVAnswer2);
             }else if(c==mRightAnswer){
-                GenerateTransition.backgroundPositiveColorTransition(mTVAnser3);
+                GenerateTransition.backgroundPositiveColorTransition(mTVAnswer3);
             }else if(d==mRightAnswer){
-                GenerateTransition.backgroundPositiveColorTransition(mTVAnser4);
+                GenerateTransition.backgroundPositiveColorTransition(mTVAnswer4);
             }
             speakNow("No");
         }
 
-        mButtonStart.setEnabled(true);
-        mButtonStart.setVisibility(View.VISIBLE);
         ChangeViewProperty.disabledViews(mTVAnswerArray);
-        TransitionManager.beginDelayedTransition(mRootLayout);
-        //hideViews(mTVAnser1,mTVAnser2,mTVAnser3,mTVAnser4,mLLFirstRow,mLLSecondRow);
+
+        GenerateTransition.goToScene(new Scene(mRootLayout));
+        mButtonStart.setVisibility(View.VISIBLE);
     }
 
-    protected void performBGAnimation(View v, int bgColor){
-        ColorDrawable[] color = {new ColorDrawable(Color.parseColor("#c5e8ff")), new ColorDrawable(bgColor)};
-        TransitionDrawable trans = new TransitionDrawable(color);
-        v.setBackground(trans);
-        trans.startTransition(3000); // duration 3 seconds
-    }
 
     @Override
     public void onResume(){

@@ -48,7 +48,7 @@ public class TinyAppsXmlPullParser {
                 if(eventType == XmlPullParser.START_TAG){
                     if(parser.getName().equals(TINYAPP)){
                         currentTinyApp = new TinyApp();
-                        tinyapps.add(currentTinyApp);
+                        //tinyapps.add(currentTinyApp);
                     }else {
                         currentTag = parser.getName();
                         //Toast.makeText(context,parser.getName(),Toast.LENGTH_SHORT).show();
@@ -68,6 +68,9 @@ public class TinyAppsXmlPullParser {
                             currentTinyApp.setDescription(parser.getText());
                         }else if(currentTag.equals(TINYAPP_ENABLED)){
                             currentTinyApp.setEnabled(Boolean.parseBoolean(parser.getText()));
+                            if(Boolean.parseBoolean(parser.getText())){
+                                tinyapps.add(currentTinyApp);
+                            }
                         }
                     }
                 }

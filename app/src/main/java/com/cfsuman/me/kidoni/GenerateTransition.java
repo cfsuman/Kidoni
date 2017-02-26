@@ -5,9 +5,16 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.transition.AutoTransition;
+import android.transition.ChangeBounds;
+import android.transition.ChangeClipBounds;
+import android.transition.ChangeScroll;
+import android.transition.ChangeTransform;
 import android.transition.Fade;
 import android.transition.Explode;
+import android.transition.Scene;
 import android.transition.Slide;
+import android.transition.TransitionManager;
+import android.transition.TransitionSet;
 import android.view.Gravity;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
@@ -18,7 +25,10 @@ public class GenerateTransition {
 
     public static void backgroundInitialColorTransition(View... views){
         for(View v:views){
-            ColorDrawable[] colors = {new ColorDrawable(Color.TRANSPARENT), new ColorDrawable(Color.BLUE)};
+            ColorDrawable[] colors = {
+                    new ColorDrawable(Color.TRANSPARENT), // Transparent
+                    new ColorDrawable(Color.parseColor("#9370DB") // MEDIUMPURPLE
+                    )};
             TransitionDrawable transitionDrawable = new TransitionDrawable(colors);
             v.setBackground(transitionDrawable);
             transitionDrawable.startTransition(1000);
@@ -26,7 +36,10 @@ public class GenerateTransition {
     }
     public static void backgroundNegativeColorTransition(View... views){
         for(View v:views){
-            ColorDrawable[] colors = {new ColorDrawable(Color.BLUE), new ColorDrawable(Color.RED)};
+            ColorDrawable[] colors = {
+                    new ColorDrawable(Color.parseColor("#9370DB")), // MEDIUMPURPLE
+                    new ColorDrawable(Color.parseColor("#DC143C") // CRIMSON
+                    )};
             TransitionDrawable transitionDrawable = new TransitionDrawable(colors);
             v.setBackground(transitionDrawable);
             transitionDrawable.startTransition(1000);
@@ -34,12 +47,16 @@ public class GenerateTransition {
     }
     public static void backgroundPositiveColorTransition(View... views){
         for(View v:views){
-            ColorDrawable[] colors = {new ColorDrawable(Color.BLUE), new ColorDrawable(Color.GREEN)};
+            ColorDrawable[] colors = {
+                    new ColorDrawable(Color.parseColor("#9370DB")),// MEDIUMPURPLE
+                    new ColorDrawable(Color.parseColor("#3CB371") // MEDIUMSEAGREEN
+                    )};
             TransitionDrawable transitionDrawable = new TransitionDrawable(colors);
             v.setBackground(transitionDrawable);
             transitionDrawable.startTransition(1000);
         }
     }
+
 
     public static Fade makeFadeTransition(){
         Fade fade = new Fade();
@@ -69,4 +86,24 @@ public class GenerateTransition {
         autoTransition.setInterpolator(new BounceInterpolator());
         return autoTransition;
     }
+
+    public static void goToScene(Scene scene){
+        ChangeBounds changeBounds = new ChangeBounds();
+        //ChangeClipBounds changeClipBounds = new ChangeClipBounds();
+        //ChangeTransform changeTransform = new ChangeTransform();
+        ChangeScroll changeScroll = new ChangeScroll();
+        Fade fade = new Fade();
+        Explode explode = new Explode();
+        Slide slide = new Slide();
+
+        TransitionSet set = new TransitionSet();
+        set.setOrdering(TransitionSet.ORDERING_TOGETHER);
+        set.addTransition(changeBounds);
+        set.addTransition(fade);
+        set.addTransition(explode);
+        set.addTransition(slide);
+
+        TransitionManager.go(scene);
+    }
+
 }
