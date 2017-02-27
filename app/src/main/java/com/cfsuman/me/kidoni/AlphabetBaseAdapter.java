@@ -74,7 +74,7 @@ public class AlphabetBaseAdapter extends BaseAdapter {
         if(mDataArray.length<1){
             mDataArray = mStringToSplit.split("(?!^)");
         }
-        Log.d("Length", mDataArray.length+"");
+        //Log.d("Length", mDataArray.length+"");
         return mDataArray;
     }
 

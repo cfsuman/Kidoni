@@ -13,6 +13,6 @@ public class KidoniApplication extends Application {
         Fresco.initialize(this);
 
         // Obtain the FirebaseAnalytics instance.
-        FirebaseAnalytics.getInstance(this);
+        //FirebaseAnalytics.getInstance(this);
     }
 }

@@ -17,6 +17,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="@color/math_question_bg"
+        android:transitionName="AdditionActivity"
         >
         <TextView
             android:id="@+id/tv_question"

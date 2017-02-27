@@ -19,9 +19,11 @@ import android.transition.Explode;
 import android.transition.Fade;
 import android.transition.Scene;
 import android.transition.Slide;
+import android.transition.Transition;
 import android.transition.TransitionManager;
 import android.transition.TransitionSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -29,7 +31,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.Locale;
+import java.util.Random;
 
 
 public class AdditionActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
@@ -61,9 +70,20 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
 
     private int mThemeColor = StaticDrawable.getRandomHSVColorBySaturation(0.9f);
 
+    //------------------- firebase + ad setup 1 --------------------
+    private Random mRandom = new Random();
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private Bundle mBundle;
+    InterstitialAd mInterstitialAd;
+    //------------------- firebase + ad setup 1 --------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //------------------- firebase + ad setup 2 --------------------
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //------------------- firebase + ad setup 2 --------------------
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addition);
 
@@ -74,6 +94,40 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         // Get the application context
         mContext = getApplicationContext();
         mActivity = AdditionActivity.this;
+
+        Slide slide = new Slide(Gravity.RIGHT);
+        slide.setDuration(2000);
+        getWindow().setEnterTransition(slide);
+
+        Fade fade = new Fade(Fade.MODE_IN);
+        fade.setDuration(2000);
+        getWindow().setExitTransition(fade);
+
+        //------------------- firebase + ad setup 3 --------------------
+        MobileAds.initialize(getApplicationContext(),getString(R.string.admob_app_id));
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.admob_interstitial_ad_unit_id));
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                //beginPlayingGame();
+            }
+        });
+
+        requestNewInterstitial();
+
+        // How to show ad
+        /*if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            //beginPlayingGame();
+        }*/
+        //------------------- firebase + ad setup 3 --------------------
+
+        // Initialize text to speech service
         tts = new TextToSpeech(mContext,this);
 
         // Set the point x y values
@@ -172,6 +226,16 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
                 //-------------------------------------------------------------------------------------------- change 4
                 mTextToSpeak = question.getNum1()+" plus "+question.getNum2();
                 speakNow(mTextToSpeak);
+
+                //------------------- firebase + ad setup 3 --------------------
+                if( rightAnswer == 5|| rightAnswer == 10 || rightAnswer == 15 || rightAnswer == 20 || rightAnswer == 25){
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    } else {
+                        //beginPlayingGame();
+                    }
+                }
+                //------------------- firebase + ad setup 3 --------------------
             }
         });
 
@@ -259,4 +323,15 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
+
+    //------------------- firebase + ad setup 5 --------------------
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                //.addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+    //------------------- firebase + ad setup 5 --------------------
+
 }

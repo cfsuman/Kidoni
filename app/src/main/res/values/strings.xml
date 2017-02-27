@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Kidoni</string>
+
+    <!-- admob banner ad code for kidoni -->
+    <!--
+        App ID: ca-app-pub-3725781479016910~3049350788
+
+        Ad unit name: Kidoni In
+        Ad unit ID: ca-app-pub-3725781479016910/8956283587
+    -->
+    <string name="admob_app_id">ca-app-pub-3725781479016910~3049350788</string>
+    <string name="admob_interstitial_ad_unit_id">ca-app-pub-3725781479016910/8956283587</string>
+
 </resources>
