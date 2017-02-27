@@ -4,24 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.ChangeBounds;
-import android.transition.ChangeClipBounds;
-import android.transition.ChangeScroll;
-import android.transition.ChangeTransform;
-import android.transition.Explode;
-import android.transition.Fade;
 import android.transition.Scene;
-import android.transition.Slide;
-import android.transition.TransitionManager;
-import android.transition.TransitionSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -29,7 +18,14 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.Locale;
+import java.util.Random;
 
 
 public class DivisionActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
@@ -61,9 +57,20 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
 
     private int mThemeColor = StaticDrawable.getRandomHSVColorBySaturation(0.9f);
 
+    //------------------- firebase + ad setup 1 --------------------
+    private Random mRandom = new Random();
+    private FirebaseAnalytics mFirebaseAnalytics;
+    private Bundle mBundle;
+    InterstitialAd mInterstitialAd;
+    //------------------- firebase + ad setup 1 --------------------
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //------------------- firebase + ad setup 2 --------------------
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //------------------- firebase + ad setup 2 --------------------
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_addition);
 
@@ -74,6 +81,37 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
         // Get the application context
         mContext = getApplicationContext();
         mActivity = DivisionActivity.this;
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            getWindow().setEnterTransition(GenerateTransition.makeSlideTransition());
+            getWindow().setExitTransition(GenerateTransition.makeFadeTransition());
+        }
+
+        //------------------- firebase + ad setup 3 --------------------
+        MobileAds.initialize(getApplicationContext(),getString(R.string.admob_app_id));
+
+        mInterstitialAd = new InterstitialAd(this);
+        mInterstitialAd.setAdUnitId(getString(R.string.admob_interstitial_ad_unit_id));
+
+        mInterstitialAd.setAdListener(new AdListener() {
+            @Override
+            public void onAdClosed() {
+                requestNewInterstitial();
+                //beginPlayingGame();
+            }
+        });
+
+        requestNewInterstitial();
+
+        // How to show ad
+        /*if (mInterstitialAd.isLoaded()) {
+            mInterstitialAd.show();
+        } else {
+            //beginPlayingGame();
+        }*/
+        //------------------- firebase + ad setup 3 --------------------
+
+        // Initialize text to speech service
         tts = new TextToSpeech(mContext,this);
 
         // Set the point x y values
@@ -152,7 +190,10 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
 
                 AnimationManager.startReverseScaleAnimation(mLLQuestion);
 
-                GenerateTransition.goToScene(new Scene(mRootLayout));
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                    GenerateTransition.goToScene(new Scene(mRootLayout));
+                }
+
                 mButtonStart.setVisibility(View.INVISIBLE);
 
                 int rightAnswer = question.getResult();
@@ -170,8 +211,18 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
                 mTVAnswer4.setText(""+question.getD());
 
                 //-------------------------------------------------------------------------------------------- change 4
-                mTextToSpeak = question.getNum1()+" divided "+question.getNum2();
+                mTextToSpeak = question.getNum1()+" divided by "+question.getNum2();
                 speakNow(mTextToSpeak);
+
+                //------------------- firebase + ad setup 3 --------------------
+                if( rightAnswer == 5|| rightAnswer == 10 || rightAnswer == 15 || rightAnswer == 20 || rightAnswer == 25){
+                    if (mInterstitialAd.isLoaded()) {
+                        mInterstitialAd.show();
+                    } else {
+                        //beginPlayingGame();
+                    }
+                }
+                //------------------- firebase + ad setup 3 --------------------
             }
         });
 
@@ -207,7 +258,9 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
 
         ChangeViewProperty.disabledViews(mTVAnswerArray);
 
-        GenerateTransition.goToScene(new Scene(mRootLayout));
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            GenerateTransition.goToScene(new Scene(mRootLayout));
+        }
         mButtonStart.setVisibility(View.VISIBLE);
     }
 
@@ -232,13 +285,13 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
         {
             int speechResult = tts.setLanguage(Locale.US);
             if(speechResult == TextToSpeech.LANG_MISSING_DATA){
-                Log.e("TTS", "Language not supported");
+                //Log.e("TTS", "Language not supported");
             } else {
                 //speakNow();
-                Log.e("TTS", "Language is ok.");
+                //Log.e("TTS", "Language is ok.");
             }
         }else{
-            Log.e("TTS", "Failed to initialize TextToSpeech service.");
+            //Log.e("TTS", "Failed to initialize TextToSpeech service.");
             //Toast.makeText(this, "Failed to speak.", Toast.LENGTH_SHORT).show();
         }
     }
@@ -259,4 +312,15 @@ public class DivisionActivity extends AppCompatActivity implements TextToSpeech.
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
     }
+
+    //------------------- firebase + ad setup 5 --------------------
+    private void requestNewInterstitial() {
+        AdRequest adRequest = new AdRequest.Builder()
+                //.addTestDevice("SEE_YOUR_LOGCAT_TO_GET_YOUR_DEVICE_ID")
+                .build();
+
+        mInterstitialAd.loadAd(adRequest);
+    }
+    //------------------- firebase + ad setup 5 --------------------
+
 }

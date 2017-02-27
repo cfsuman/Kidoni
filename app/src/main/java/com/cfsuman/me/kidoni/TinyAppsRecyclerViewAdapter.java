@@ -75,8 +75,9 @@ public class TinyAppsRecyclerViewAdapter extends RecyclerView.Adapter<TinyAppsRe
                 try {
                     Intent intent = new Intent(mContext, Class.forName(mContext.getPackageName() +"."+ tv_title.getTag()));
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    mContext.startActivity(intent);
 
-                    //if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                         ActivityOptions options = ActivityOptions.makeSceneTransitionAnimation(
                                 mActivity, // This activity
                                 tv_title, // Shared element
@@ -84,9 +85,7 @@ public class TinyAppsRecyclerViewAdapter extends RecyclerView.Adapter<TinyAppsRe
                         );
                         // Start the second activity
                         //mContext.startActivity(intent, options.toBundle());
-                    //}else {
-                        mContext.startActivity(intent);
-                    //}
+                    }*/
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -121,7 +120,10 @@ public class TinyAppsRecyclerViewAdapter extends RecyclerView.Adapter<TinyAppsRe
         holder.mTextViewTitle.setText(title);
         holder.mTextViewTitle.setTag(className);
         holder.mSimpleDraweeView.setImageURI(imageUri);
-        holder.mTextViewTitle.setTransitionName(className);
+
+        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.LOLLIPOP){
+            //holder.mTextViewTitle.setTransitionName(className);
+        }
 
         // Increase the counter
         mCounter +=1;

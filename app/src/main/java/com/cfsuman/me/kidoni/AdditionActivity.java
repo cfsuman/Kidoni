@@ -4,26 +4,13 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.Point;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.ChangeBounds;
-import android.transition.ChangeClipBounds;
-import android.transition.ChangeScroll;
-import android.transition.ChangeTransform;
-import android.transition.Explode;
-import android.transition.Fade;
 import android.transition.Scene;
-import android.transition.Slide;
-import android.transition.Transition;
-import android.transition.TransitionManager;
-import android.transition.TransitionSet;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -95,13 +82,10 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         mContext = getApplicationContext();
         mActivity = AdditionActivity.this;
 
-        Slide slide = new Slide(Gravity.RIGHT);
-        slide.setDuration(2000);
-        getWindow().setEnterTransition(slide);
-
-        Fade fade = new Fade(Fade.MODE_IN);
-        fade.setDuration(2000);
-        getWindow().setExitTransition(fade);
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            getWindow().setEnterTransition(GenerateTransition.makeSlideTransition());
+            getWindow().setExitTransition(GenerateTransition.makeFadeTransition());
+        }
 
         //------------------- firebase + ad setup 3 --------------------
         MobileAds.initialize(getApplicationContext(),getString(R.string.admob_app_id));
@@ -206,7 +190,10 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
 
                 AnimationManager.startReverseScaleAnimation(mLLQuestion);
 
-                GenerateTransition.goToScene(new Scene(mRootLayout));
+                if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+                    GenerateTransition.goToScene(new Scene(mRootLayout));
+                }
+
                 mButtonStart.setVisibility(View.INVISIBLE);
 
                 int rightAnswer = question.getResult();
@@ -271,7 +258,9 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
 
         ChangeViewProperty.disabledViews(mTVAnswerArray);
 
-        GenerateTransition.goToScene(new Scene(mRootLayout));
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            GenerateTransition.goToScene(new Scene(mRootLayout));
+        }
         mButtonStart.setVisibility(View.VISIBLE);
     }
 
@@ -296,13 +285,13 @@ public class AdditionActivity extends AppCompatActivity implements TextToSpeech.
         {
             int speechResult = tts.setLanguage(Locale.US);
             if(speechResult == TextToSpeech.LANG_MISSING_DATA){
-                Log.e("TTS", "Language not supported");
+                //Log.e("TTS", "Language not supported");
             } else {
                 //speakNow();
-                Log.e("TTS", "Language is ok.");
+                //Log.e("TTS", "Language is ok.");
             }
         }else{
-            Log.e("TTS", "Failed to initialize TextToSpeech service.");
+            //Log.e("TTS", "Failed to initialize TextToSpeech service.");
             //Toast.makeText(this, "Failed to speak.", Toast.LENGTH_SHORT).show();
         }
     }

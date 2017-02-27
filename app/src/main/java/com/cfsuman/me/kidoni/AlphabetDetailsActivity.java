@@ -21,6 +21,8 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.ToggleButton;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.Locale;
 
 public class AlphabetDetailsActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
@@ -44,6 +46,10 @@ public class AlphabetDetailsActivity extends AppCompatActivity implements TextTo
 
     private int mThemeColor = StaticDrawable.getRandomHSVColorBySaturation(0.9f);
 
+    //------------------- firebase + ad setup 1 --------------------
+    private FirebaseAnalytics mFirebaseAnalytics;
+    //------------------- firebase + ad setup 1 --------------------
+
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -63,6 +69,10 @@ public class AlphabetDetailsActivity extends AppCompatActivity implements TextTo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //------------------- firebase + ad setup 2 --------------------
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //------------------- firebase + ad setup 2 --------------------
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alphabet_details);
 
@@ -77,6 +87,11 @@ public class AlphabetDetailsActivity extends AppCompatActivity implements TextTo
         mContext = getApplicationContext();
         tts = new TextToSpeech(mContext,this);
         mActivity = AlphabetDetailsActivity.this;
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            getWindow().setEnterTransition(GenerateTransition.makeSlideTransition());
+            getWindow().setExitTransition(GenerateTransition.makeFadeTransition());
+        }
 
         // Set the action bar title
         getSupportActionBar().setTitle("");
@@ -165,13 +180,13 @@ public class AlphabetDetailsActivity extends AppCompatActivity implements TextTo
         {
             int speechResult = tts.setLanguage(Locale.US);
             if(speechResult == TextToSpeech.LANG_MISSING_DATA){
-                Log.e("TTS", "Language not supported");
+                //Log.e("TTS", "Language not supported");
             } else {
                 //speakNow();
-                Log.e("TTS", "Language is ok.");
+                //Log.e("TTS", "Language is ok.");
             }
         }else{
-            Log.e("TTS", "Failed to initialize TextToSpeech service.");
+            //Log.e("TTS", "Failed to initialize TextToSpeech service.");
             //Toast.makeText(this, "Failed to speak.", Toast.LENGTH_SHORT).show();
         }
     }

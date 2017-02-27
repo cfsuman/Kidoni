@@ -21,8 +21,12 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.ads.InterstitialAd;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.Random;
 
 public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
     private Context mContext;
@@ -40,14 +44,28 @@ public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.
 
     private int mThemeColor = StaticDrawable.getRandomHSVColorBySaturation(0.9f);
 
+    //------------------- firebase + ad setup 1 --------------------
+    private FirebaseAnalytics mFirebaseAnalytics;
+    //------------------- firebase + ad setup 1 --------------------
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //------------------- firebase + ad setup 2 --------------------
+        // Obtain the FirebaseAnalytics instance.
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        //------------------- firebase + ad setup 2 --------------------
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alphabet);
 
         // Set the context and activity
         mContext = getApplicationContext();
         mActivity = AlphabetActivity.this;
+
+        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.LOLLIPOP){
+            getWindow().setEnterTransition(GenerateTransition.makeSlideTransition());
+            getWindow().setExitTransition(GenerateTransition.makeFadeTransition());
+        }
 
         tts = new TextToSpeech(mContext,this);
 
@@ -148,13 +166,13 @@ public class AlphabetActivity extends AppCompatActivity implements TextToSpeech.
         {
             int speechResult = tts.setLanguage(Locale.US);
             if(speechResult == TextToSpeech.LANG_MISSING_DATA){
-                Log.e("TTS", "Language not supported");
+                //Log.e("TTS", "Language not supported");
             } else {
                 //speakNow();
-                Log.e("TTS", "Language is ok.");
+                //Log.e("TTS", "Language is ok.");
             }
         }else{
-            Log.e("TTS", "Failed to initialize TextToSpeech service.");
+            //Log.e("TTS", "Failed to initialize TextToSpeech service.");
             //Toast.makeText(this, "Failed to speak.", Toast.LENGTH_SHORT).show();
         }
     }
