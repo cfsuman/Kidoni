@@ -101,7 +101,7 @@
                 android:gravity="center"
                 android:padding="20dp"
                 android:layout_margin="5dp"
-                android:background="@drawable/states_custom_button"
+                android:background="@drawable/custom_button_enabled"
                 />
         </LinearLayout>
     </GridLayout>

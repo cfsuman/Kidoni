@@ -1,11 +1,12 @@
 package com.cfsuman.me.kidoni;
 
 import android.app.Application;
+import android.support.multidex.MultiDexApplication;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-public class KidoniApplication extends Application {
+public class KidoniApplication extends MultiDexApplication {
     @Override
     public void onCreate(){
         super.onCreate();
