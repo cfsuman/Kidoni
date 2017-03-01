@@ -4,7 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:name=".KidoniApplication"
@@ -13,42 +13,61 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AlphabetActivity" android:parentActivityName=".MainActivity" />
-        <activity android:name=".MathActivity" android:parentActivityName=".MainActivity" />
-        <activity android:name=".NumbersActivity" android:parentActivityName=".MainActivity" />
-        <activity android:name=".ShapesActivity" android:parentActivityName=".MainActivity" />
-        <activity android:name=".AlphabetDetailsActivity" android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".AlphabetActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".MathActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".NumbersActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ShapesActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AlphabetDetailsActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AdditionActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SubtractionActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MultiplicationActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".DivisionActivity"
+            android:configChanges="orientation|screenSize"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".AdditionActivity" android:parentActivityName=".MainActivity"
+        <activity android:name=".SimpleRecyclerViewActivity" />
+        <activity android:name=".CountryActivity"
+            android:parentActivityName=".MainActivity"
             android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".SubtractionActivity" android:parentActivityName=".MainActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".MultiplicationActivity" android:parentActivityName=".MainActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
-            />
-        <activity android:name=".DivisionActivity" android:parentActivityName=".MainActivity"
-            android:configChanges="orientation|screenSize"
-            android:screenOrientation="portrait"
             />
 
-        <!--Include the AdActivity configChanges and theme. -->
-        <activity android:name="com.google.android.gms.ads.AdActivity"
+        <!-- Include the AdActivity configChanges and theme. -->
+        <activity
+            android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
             android:theme="@android:style/Theme.Translucent" />
     </application>

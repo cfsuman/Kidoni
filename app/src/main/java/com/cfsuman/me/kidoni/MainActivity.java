@@ -16,7 +16,6 @@ import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
-
     private Context mContext;
     private Activity mActivity;
 

@@ -40,7 +40,7 @@ public class TinyAppsXmlPullParser {
             // Specify the input stream for the xml pull parser
             parser.setInput(stream,null);
 
-            // Get the vent type from XMLPullParser
+            // Get the event type from XMLPullParser
             int eventType = parser.getEventType();
 
             // Loop through the xml data

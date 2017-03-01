@@ -56,4 +56,11 @@
         <description></description>
         <enabled>false</enabled>
     </tinyapp>
+    <tinyapp>
+        <title>Country</title>
+        <classname>CountryActivity</classname>
+        <image>sign_country.png</image>
+        <description></description>
+        <enabled>true</enabled>
+    </tinyapp>
 </tinyapps>
